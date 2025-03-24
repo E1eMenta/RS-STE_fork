@@ -1,6 +1,6 @@
 model:
   base_learning_rate: 4.5e-06
-  target: model.model.EditTransformer
+  target: model.model.RSSTE
   params:
     transformer_config:
       target: model.minGPT.GPT

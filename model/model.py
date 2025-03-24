@@ -35,7 +35,7 @@ class PerceptualLoss(nn.Module):
                 features.append(x)
         return features
 
-class EditTransformer(pl.LightningModule):
+class RSSTE(pl.LightningModule):
     def __init__(self,
                  transformer_config,
                  decoder_config,
@@ -200,7 +200,7 @@ class EditTransformer(pl.LightningModule):
             rec1_loss = F.cross_entropy(output["logits1"][:,288:320,:].contiguous().view(-1, output["logits1"][:,288:320,:].shape[-1]), output["rec1_indices"].view(-1))
             rec2_loss = F.cross_entropy(output["logits2"][:,288:320,:].contiguous().view(-1, output["logits2"][:,288:320,:].shape[-1]), output["rec2_indices"].view(-1))
             loss = 10*img_mse_loss + img_perceptual_loss + 50*rec1_loss + 50*rec2_loss
-            
+
             self.log("train/img_mse_loss", img_mse_loss, prog_bar=True, logger=True, on_step=True, on_epoch=True)
             self.log("train/img_perceptual_loss", img_perceptual_loss, prog_bar=True, logger=True, on_step=True, on_epoch=True)
             self.log("train/rec1_loss", rec1_loss, prog_bar=True, logger=True, on_step=True, on_epoch=True)
