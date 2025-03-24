@@ -1,5 +1,6 @@
 # Recognition-Synergistic Scene Text Editing 🎨✨
 [![arXiv](https://img.shields.io/badge/arXiv-2503.08387-b31b1b.svg)](https://arxiv.org/abs/2503.08387)
+
 **CVPR 2025 | ​Official Implementation**
 This is a official implementation of RS-STE proposed by our paper Recognition-Synergistic Scene Text Editing (CVPR 2025).
 
