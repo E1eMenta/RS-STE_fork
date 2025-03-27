@@ -21,7 +21,7 @@ data:
     batch_size: 4
     num_workers: 8
     train:
-      target: data.real_data.RealTrain
+      target: data.dataset.TrainDataset
       params:
         training_annotation_file: 
           - data/annotation/real_train.pkl
@@ -29,7 +29,7 @@ data:
           - 1
         size: 32
     validation:
-      target: data.real_data.RealTest
+      target: data.dataset.InferenceDataset
       params:
         test_annotation_file: data/annotation/real_test_annotations.pkl
         size: 32

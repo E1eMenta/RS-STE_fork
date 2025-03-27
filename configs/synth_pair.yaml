@@ -20,7 +20,7 @@ data:
     batch_size: 8
     num_workers: 8
     train:
-      target: data.pair_data.SyntheticPairTrain
+      target: data.dataset.TrainDataset
       params:
         training_annotation_file:  
           - data/annotation/train_annotations.pkl
@@ -28,7 +28,7 @@ data:
           - 1
         size: 32
     validation:
-      target: data.pair_data.SyntheticPairTest
+      target: data.dataset.InferenceDataset
       params:
         test_annotation_file: data/annotation/test_annotations.pkl
         size: 32

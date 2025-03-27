@@ -1,3 +1,5 @@
 logs
 *.png
 weights/.
+results/.
+output/.

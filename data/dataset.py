@@ -9,10 +9,9 @@ import cv2
 hw_ratio = 4
 
 class ImagePaths(Dataset):
-    def __init__(self, size=32, labels=None, paired=False):
+    def __init__(self, size=32, labels=None):
         self.max_h = size
         self.max_w = size * hw_ratio
-        self.paired = paired
         self.labels = labels
         self._length = len(labels[list(labels.keys())[0]])
         self.resize = albumentations.Resize(height=self.max_h, width=self.max_w)
@@ -40,8 +39,9 @@ class ImagePaths(Dataset):
             example['image1'], example['ori_size'], example["image1_size"] = self.preprocess_image(self.labels["image1_paths"][i])
             if "image1_rec" in self.labels:
                 example['rec1'] = self.labels["image1_rec"][i]
-            example['rec2'] = self.labels["image2_rec"][i]
-            if self.paired:
+            if "image2_rec" in self.labels:
+                example['rec2'] = self.labels["image2_rec"][i]
+            if 'image2_paths' in self.labels:
                 example['image2'], example['ori_size'], example["image2_size"] = self.preprocess_image(self.labels["image2_paths"][i])
             return example
         except:
@@ -76,12 +76,12 @@ def BaseDataset(Dataset):
         return example
     
 class TrainingDataset(BaseDataset):
-    def __init__(self, size, paired, annotation_file, data_proportion=None):
+    def __init__(self, size, annotation_file, data_proportion=None):
         super().__init__()
         if isinstance(annotation_file, str):
             with open(annotation_file, "rb") as f:
                 data = pickle.load(f)
-            self.data = ImagePaths(size=size, paired=paired, labels=data)
+            self.data = ImagePaths(size=size, labels=data)
         else:
             if data_proportion == None:
                 data = {}
@@ -93,12 +93,19 @@ class TrainingDataset(BaseDataset):
                             data[k] += data_[k]
                         else:
                             data[k] = data_[k]
-                self.data = ImagePaths(size=size, paired=paired, labels=data)
+                self.data = ImagePaths(size=size, labels=data)
             else:
                 data_proportion = list(data_proportion)
                 self.data = []
                 for file in annotation_file:
                     with open(file, "rb") as f:
                         data = pickle.load(f)
-                    self.data.append(ImagePaths(size=size, paired=paired,labels=data))
+                    self.data.append(ImagePaths(size=size, labels=data))
                     self.data_proportion = data_proportion
+
+class InferenceDataset(BaseDataset):
+    def __init__(self, size, annotation_file):
+        super().__init__()
+        with open(annotation_file, "rb") as f:
+            data = pickle.load(f)
+        self.data = ImagePaths(size=size, labels=data)
