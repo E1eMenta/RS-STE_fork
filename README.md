@@ -51,7 +51,7 @@ with open("data/annotation/inference_annotations.pkl", "wb") as f:
 
 
 ## 2️⃣ Inference
-
+[Pretrained Model Download](https://pan.baidu.com/s/151EXQY5SdpETd3BS62dJYQ?pwd=db8s).
 ##  Training
 
 ## Citation
