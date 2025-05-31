@@ -7,3 +7,4 @@ opencv-python
 omegaconf
 tensorboard
 editdistance
+einops

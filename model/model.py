@@ -62,11 +62,11 @@ class RSSTE(pl.LightningModule):
         model.eval()
         model.train = disable_train
         self.decoder = model
+
     
     def init_transformer_from_config(self, config, ckpt_path):
         self.transformer = instantiate_from_config(config)
         if ckpt_path is not None:
-            self.load_state_dict(torch.load(ckpt_path)['state_dict'], strict=False)
             print(f"Transformer restored from {ckpt_path}")
 
             from collections import OrderedDict

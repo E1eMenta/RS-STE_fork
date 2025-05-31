@@ -14,11 +14,9 @@ This is an official implementation of RS-STE proposed by our paper Recognition-S
 ## 🚧 Under Construction 🚧
 We're currently polishing the code and preparing everything for public release. Here's what you can expect in the near future:
 **TODO List ✅**
-- [ ] **Code Release**: Clean and document the core implementation.  
-- [ ] **Pre-trained Models**: Upload models for easy inference.  
-- [ ] **Dataset Tools**: Provide scripts for dataset preparation.  
-- [ ] **Demo**: Create a user-friendly demo for quick testing.  
-- [ ] **Documentation**: Write detailed usage instructions and technical explanations.  
+- [x] Inference demo.
+- [ ] Training code and dataset preparation.
+- [ ] Evaluation scripts.
 
 Stay tuned! We'll update this repository step by step. ⏳
 
@@ -47,7 +45,7 @@ pip install -r requirements.txt
 ```
 
 ## 1️⃣ Dataset 
-Organize the annotation file into the following format and save it directly to ```data/annotation```:
+Organize the annotation file into the following format and save it directly to ```data/annotation```. An example annotation file for inference is given as:
 ```
 import pickle
 data = {
@@ -59,12 +57,17 @@ data = {
 with open("data/annotation/inference_annotations.pkl", "wb") as f:
     pickle.dump(data, f)
 ```
+you can run ```uv run python tools/dataset_prepare.py``` to get the annotation file of examples.
 
 
 ## 2️⃣ Inference
 Download the pretrained checkpoints here: [Pretrained Model Download](https://pan.baidu.com/s/151EXQY5SdpETd3BS62dJYQ?pwd=db8s).
-
+Then run:
+```
+uv run python inference.py --resume path/to/checkpoint
+```
 
 ## 3️⃣ Training
 
 ## 🎬 Citation
+

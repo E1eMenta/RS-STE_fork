@@ -2,3 +2,8 @@ logs
 weights
 results
 output
+data/annotation/*.pkl
+.venv
+.vscode
+**/__pycache__/
+*.pyc

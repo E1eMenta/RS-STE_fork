@@ -9,7 +9,7 @@ from omegaconf import OmegaConf
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 from PIL import Image
-
+from datetime import datetime
 from data.dataset import InferenceDataset
 from main import instantiate_from_config, get_parser, get_obj_from_str
 
@@ -21,17 +21,17 @@ def crop_and_resize(x, size, ori_size, k):
     img = (img * 255).astype(np.uint8)
     return img
 
+
 def main(args):
-    decoder_config = OmegaConf.load(args.decoder_config)
+    decoder_config = OmegaConf.load(args.vqgan_config)
     config = OmegaConf.load(args.transformer_config)
     config.model.params.decoder_config = decoder_config.model
     config.model.params.ckpt_path = args.resume
     model = instantiate_from_config(config.model).to('cuda')
     model.eval()
 
-    dataset = InferenceDataset(config.data.validation.params.size, config.data.validation.params.test_annotation_file)
+    dataset = InferenceDataset(config.data.params.validation.params.size, args.inference_anno)
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=False)
-
     if not os.path.exists(args.target_path):
         os.mkdir(args.target_path)
 
@@ -63,7 +63,12 @@ def main(args):
 
 if __name__ == "__main__":
     parser = get_parser()
-    parser.add_argument("--target_path", type=str, default="results")
+    parser.add_argument("--batch_size", type=int, default=1)
+    parser.add_argument("--inference_anno", type=str, default="data/annotation/inference_annotations.pkl")
+    parser.add_argument("--target_path", type=str,  default=f"output/inference_{datetime.now().strftime('%Y%m%d_%H%M%S')}")
     args = parser.parse_args()
+
+    os.makedirs(args.target_path, exist_ok=True)
+    print(f"Saving results to {args.target_path}")
     main(args)
 

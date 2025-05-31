@@ -291,7 +291,7 @@ class VQModel_Decoder(pl.LightningModule):
     def __init__(self,
                  ddconfig,
                  embed_dim,
-                 ckpt_path=None,):
+                 ckpt_path=None):
         super().__init__()
         self.embed_dim = embed_dim
         self.decoder = Decoder(**ddconfig)
@@ -310,8 +310,6 @@ class VQModel_Decoder(pl.LightningModule):
 
         self.load_state_dict(new_keys, strict=True)
 
-        
-    
     def decode(self, h):
         h = self.post_quant_conv(h)
         dec = self.decoder(h)

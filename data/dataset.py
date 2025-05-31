@@ -37,18 +37,18 @@ class ImagePaths(Dataset):
         try:
             example['img_name'] = os.path.basename(self.labels["image1_paths"][i])
             example['image1'], example['ori_size'], example["image1_size"] = self.preprocess_image(self.labels["image1_paths"][i])
-            if "image1_rec" in self.labels:
+            if "image1_rec" in self.labels and len(self.labels['image1_rec']) != 0:
                 example['rec1'] = self.labels["image1_rec"][i]
-            if "image2_rec" in self.labels:
+            if "image2_rec" in self.labels and len(self.labels['image2_rec']) != 0:
                 example['rec2'] = self.labels["image2_rec"][i]
-            if 'image2_paths' in self.labels:
+            if 'image2_paths' in self.labels and len(self.labels['image2_paths']) != 0:
                 example['image2'], example['ori_size'], example["image2_size"] = self.preprocess_image(self.labels["image2_paths"][i])
             return example
         except:
             print("Error in loading image.")
             return self.__getitem__(i+1)
 
-def BaseDataset(Dataset):
+class BaseDataset(Dataset):
     def __init__(self, *args, **kwargs):
         super().__init__()
         self.data = None
@@ -56,7 +56,7 @@ def BaseDataset(Dataset):
         self._length = None
     
     def __len__(self):
-        if not self._length:
+        if self._length is not None:
             return self._length
         
         if isinstance(self.data, list):
