@@ -61,7 +61,7 @@ you can run ```uv run python tools/dataset_prepare.py``` to get the annotation f
 
 
 ## 2️⃣ Inference
-Download the pretrained checkpoints here: [Pretrained Model Download](https://pan.baidu.com/s/151EXQY5SdpETd3BS62dJYQ?pwd=db8s).
+Download the pretrained checkpoints here: [BaiduNetDisk](https://pan.baidu.com/s/151EXQY5SdpETd3BS62dJYQ?pwd=db8s) or [Google Drive](https://drive.google.com/file/d/1ThBNiVR6JbgGXX1sy_2N9KXJZbmJEkSI/view?usp=drive_link).
 Then run:
 ```
 uv run python inference.py --resume path/to/checkpoint
