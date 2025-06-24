@@ -70,7 +70,7 @@ class RSSTE(pl.LightningModule):
             print(f"Transformer restored from {ckpt_path}")
 
             from collections import OrderedDict
-            sd = torch.load(ckpt_path)['state_dict']
+            sd = torch.load(ckpt_path, map_location='cpu')['state_dict']
             keys = list(sd.keys())
             new_keys = OrderedDict()
             model_state_dict = self.state_dict()
